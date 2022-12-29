@@ -10,6 +10,6 @@ class User(models.Model):
     name = models.TextField()
 
 class Customer(models.Model):
-    cusId = models.IntegerField(max_length=10, primary_key=True)
+    cusId = models.TextField(max_length=10, primary_key=True)
     cusName = models.TextField(max_length=255)
     cusPhone = models.TextField(max_length=20)

@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'users.apps.usersConfig',
-    'flights.apps.flightsConfig'
+    'users.apps.UsersConfig',
+    'flights.apps.FlightsConfig',
     
 ]
 
