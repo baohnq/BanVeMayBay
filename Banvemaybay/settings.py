@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'flights.apps.FlightsConfig',
+    'base.apps.BaseConfig',
     
 ]
 
@@ -58,7 +59,9 @@ ROOT_URLCONF = 'Banvemaybay.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

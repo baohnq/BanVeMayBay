@@ -1,0 +1,110 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- <style>
+    
+    *{ 
+        box-sizing: border-box;
+    }
+
+    .bg-img{
+        /* margin: 150px 0 50px 0 ; */
+        background: center center / cover url("https://whatsgrouplink.com/wp-content/uploads/2020/06/Travel-WhatsApp-Group.jpg") no-repeat;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        
+        /* min-height: 500; */
+        
+    }
+    .bg-img.form, .login-container {
+        position: absolute;
+        
+        max-width: 300px;
+        padding: 16px;
+        background-color: aquamarine;
+        left: 75%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+    }
+
+    .login-container h1{
+        text-align: center;
+    }
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+}
+
+    input[type=text]:focus, input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+}
+    .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.8;
+}
+
+    .btn:hover {
+        background-color: red;
+        opacity: 0.8;
+}
+    .show-psw{
+        margin: 5px 0 22px 0;
+    }
+    .info{
+        text-align: right;
+        
+        padding: 10px 10px;
+    }
+</style>
+
+<script>
+    function showPassword(){
+        var x = document.getElementById("psw-input");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script> -->
+
+<div class="bg-img">
+        
+    <form action="" class="login-container">
+        <h1>Login</h1>
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="usr"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username">
+        
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" id="psw-input">
+            <!-- <input class="show-psw" type="checkbox" onclick="showPassword() ">Show Password -->
+            
+            <input type="submit" class="btn" name="bt" value="Login">
+        </form>
+
+        
+    </form>
+
+    <div class="info">
+        <p>Hotline: (+84) 000.111.222</p>
+        <p>Email: NMCNPM_Group25@yahoo.com</p>
+    </div>
+</div>
+
+{% endblock content %}
