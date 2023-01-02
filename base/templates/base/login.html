@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<!-- <style>
+<style>
     
     *{ 
         box-sizing: border-box;
@@ -71,35 +71,35 @@
 
 <script>
     function showPassword(){
-        var x = document.getElementById("psw-input");
+        var x = document.getElementById("password");
         if (x.type === "password") {
             x.type = "text";
         } else {
             x.type = "password";
         }
     }
-</script> -->
+</script>
 
 <div class="bg-img">
         
-    <form action="" class="login-container">
+    <div class="login-container">
         <h1>Login</h1>
         
         <form method="POST" action="">
             {% csrf_token %}
-            <label for="usr"><b>Username</b></label>
+            <label for="username"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="username">
         
 
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" id="psw-input">
-            <!-- <input class="show-psw" type="checkbox" onclick="showPassword() ">Show Password -->
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" id="password">
+            <input class="show-psw" type="checkbox" onclick="showPassword() ">Show Password
             
             <input type="submit" class="btn" name="bt" value="Login">
         </form>
 
         
-    </form>
+    </div>
 
     <div class="info">
         <p>Hotline: (+84) 000.111.222</p>
