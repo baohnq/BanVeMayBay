@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<tr>
+    Mã chuyến bay|
+    Hãng|
+    Hành Trình|
+    Ngày khởi hành
+</tr>
+<br>
+{% for schedule in schedules %}
+
+<tr>
+    {{schedule.flId.flId}}|
+    {{schedule.flId.brand.brName}}|
+    {{schedule.flId.fromAp.apName}} to {{schedule.flId.toAp.apName}}
+    |{{schedule.date|date:'Y-m-d'}}   
+ </tr>
+
+{% endfor %}
+
+{% endblock content %}

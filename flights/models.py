@@ -24,8 +24,8 @@ class Flight(models.Model):
 class Schedule(models.Model):
     flId = models.ForeignKey(Flight, on_delete=models.CASCADE)
     date = models.DateField()
-    firstClassBooked = models.IntegerField()
-    secondClassBooked = models.IntegerField()
+    firstClassRest = models.IntegerField()
+    secondClassRest = models.IntegerField()
     firstClass = models.IntegerField()
     secondClass = models.IntegerField()
 
