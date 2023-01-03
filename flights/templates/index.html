@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<form action="" method="get">
+    <select name="ticket_type" id="TT">
+        <option value="one way">One way</option>
+        <option value="round trip">Round trip</option>
+    </select>
+    <select name="class" id="cl">
+        <option value="economy">Economy</option>
+        <option value="bussiness">Bussiness</option>
+    </select>
+    <input type="number" name="seat_number" id="ns" value="1" min=1 max=20>
+    <input type="submit" value='Search'>
+    <br><br>
+    <label for="from">from</label>
+    <select name="from" id="from">
+        {% for airport in airports %}
+            <option value={{airport}}>{{airport}}</option><-->
+        {% endfor %}
+    </select>
+
+    <label for="to">to</label>
+    <select name="to" id="to">
+        {% for airport in airports %}
+            <option value={{airport}}>{{airport}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="departure date">departure date</label>
+    <input type="date" name="departure_date" id="departure_date" >
+</form>
+    
+{% endblock content %}
