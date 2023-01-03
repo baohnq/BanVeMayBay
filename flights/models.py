@@ -36,6 +36,10 @@ class Schedule(models.Model):
             )
         ]
 
+class Customer(models.Model):
+    customerID = models.CharField(max_length=10, primary_key=True, blank=True)
+    name = models.TextField(null=True, blank= True)
+    sdt = models.CharField(max_length=10)
 
 class Ticket(models.Model):
     ticketId = models.CharField(max_length=14,primary_key=True)
@@ -44,7 +48,7 @@ class Ticket(models.Model):
     
     flId = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="flId_ticket")
     date = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="date_ticket")
-    customID = models.TextField()
+    customID = models.ForeignKey(Customer,on_delete=models.CASCADE)
     booked = models.DateTimeField(auto_now=True)
     cost = models.FloatField()
     staff = models.ForeignKey(User, on_delete=models.CASCADE)
