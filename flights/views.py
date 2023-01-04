@@ -33,3 +33,5 @@ def display(request):
     i = Customer.objects.all()
     context = {"info":i}
     return render(request,"display.html",context)
+
+    
