@@ -1,6 +1,14 @@
 from django.db import models
-from users.models import User
+
 # Create your models here.
+
+class User(models.Model):
+    username = models.CharField(max_length=50, primary_key=True)
+    password = models.CharField(max_length=50)
+    # role: admin, 0: staff
+    role = models.IntegerField()
+    
+    name = models.TextField()
 
 class Airport(models.Model):
     apId = models.CharField(max_length=5, primary_key=True)
@@ -15,7 +23,7 @@ class Brand(models.Model):
 class Flight(models.Model):
     flId = models.CharField(max_length=9, primary_key=True)  
     # 2 chữ viết tắt hãng + năm + 4 chữ số vd: VJ22-0001
-    #[VJ, VN, BB, PA, JP] .
+    #[VJ, VN, BB, PA, HA] .
     fromAp = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="fromAP_flight")
     toAp = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="toAP_flight")
     flTime = models.IntegerField()
