@@ -41,8 +41,9 @@ def display(request):
 def index(request):
     
     airports = Airport.objects.all()
-    context = {'airports':airports}
-    
+    schedules = {}
+    departure_date = ''
+    is_search = 0
     if request.method == 'GET':
         ticket_type = request.GET.get('ticket_type')
         class_fl = request.GET.get('class')
@@ -64,13 +65,15 @@ def index(request):
                 schedules = schedules.filter(Q(firstClassRest__gte=seat_number))
             else:
                 schedules = schedules.filter(Q(secondClassRest__gte=seat_number))
-                
-            context = {
-                'schedules': schedules,
-            }
-            return render(request,'search.html',context)
+            
+            is_search = 1
         # else ticket_type = 'round trip'
         else:
             pass
-            
+    context = {
+                'airports':airports,
+                'schedules': schedules,
+                'departure_date':departure_date,
+                'is_search':is_search,
+            }
     return render(request,'index.html',context)
