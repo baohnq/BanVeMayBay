@@ -1,0 +1,9 @@
+<tr>
+    {{schedule.flId.flId}}|
+    {{schedule.flId.brand.brName}}|
+    {{schedule.flId.fromAp.apName}} to {{schedule.flId.toAp.apName}}
+    |{{schedule.date|date:'Y-m-d'}}   
+ </tr>
+
+ 
+<a href="{% url 'create_customer' pk  %}"> Create Customer</a>
