@@ -93,6 +93,10 @@
 
             <label for="password"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" id="password">
+            {% if is_not_login == True %}
+            <small>Wrong username or password</small><br>
+            {% endif %}
+            
             <input class="show-psw" type="checkbox" onclick="showPassword() ">Show Password
             
             <input type="submit" class="btn" name="bt" value="Login">

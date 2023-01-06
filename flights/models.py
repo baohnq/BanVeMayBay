@@ -1,14 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class User(models.Model):
-    username = models.CharField(max_length=50, primary_key=True)
-    password = models.CharField(max_length=50)
+class User(AbstractUser):
+    username = models.CharField(max_length=50, unique=True, null=True)
+    password = models.CharField(max_length=50, null=True)
     # role: admin, 0: staff
-    role = models.IntegerField()
+    role = models.IntegerField(null=True)
     
-    name = models.TextField()
+    name = models.TextField(null=True)
+
+    USERNAME_FIELD = 'username'
 
 class Airport(models.Model):
     apId = models.CharField(max_length=5, primary_key=True)
@@ -54,8 +57,8 @@ class Ticket(models.Model):
     # xxyy-zzzz-tttt
     # xxyy-zzzz: ma chuyen bay, tttt: so thu tu ve
     
-    flId = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="flId_ticket")
-    date = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="date_ticket")
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    
     customID = models.ForeignKey(Customer,on_delete=models.CASCADE)
     booked = models.DateTimeField(auto_now=True)
     cost = models.FloatField()

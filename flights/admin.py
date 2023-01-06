@@ -6,4 +6,4 @@ admin.site.register(Flight)
 admin.site.register(Airport)
 admin.site.register(Brand)
 admin.site.register(Schedule)
-
+admin.site.register(User)
