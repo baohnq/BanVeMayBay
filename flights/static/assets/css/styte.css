@@ -1,3 +1,5 @@
+
+/* INDEX */
 * {
     margin: 0;
     padding: 0;
@@ -52,8 +54,15 @@ main {
     position: absolute;
     left: 50%;
     top: 60%;
-    transform: translate(-50%, -50%);
+    transform:  translate(-50%, -50%) scaleX(-1);
     background-color: #fff;
-    padding: 50px 20px;
+    padding: 30px 15px;
     border-radius: 20px;
 }
+
+
+
+
+
+
+/* SEARCH  */
