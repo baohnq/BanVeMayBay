@@ -10,4 +10,5 @@ class CustomerForm(ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'password', 'name']
+        # exclude = ['email', 'first_name', 'last_name', 'date_joined', 'last_login', 'is_superuser', 'is_staff', 'is_active']

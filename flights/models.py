@@ -7,7 +7,11 @@ class User(AbstractUser):
     username = models.CharField(max_length=50, unique=True, null=True)
     password = models.CharField(max_length=50, null=True)
     # role: admin, 0: staff
-    role = models.IntegerField(null=True)
+
+    STAFF = 'st'
+    role_choices = [(STAFF, 'staff')]
+
+    role = models.CharField(max_length=2, choices=role_choices, null=True, default=STAFF)
     
     name = models.TextField(null=True)
 
