@@ -3,32 +3,89 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, When, F
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from .models import Customer
-from .forms import CustomerForm 
-from .models import Airport, Flight, Ticket, Brand, Schedule
+# from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomerForm, UserForm
+from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer
 
 from datetime import datetime
 # Create your views here.
+
+def login(request):
+    # page = 'login'
+    username = ''
+    password = ''
+    context = {}
+    is_not_login = False
+    
+
+    if request.method == 'POST':
+        # form
+        username = request.POST.get('username').lower()
+        password = request.POST.get('password')
+
+        try:
+            # database
+            user = User.objects.get(username=username)
+            usr = user.username
+            pwd = user.password
+            
+        except:
+            return render(request, 'login.html', context)
+
+        # user = authenticate(request, username=username, password=password)
+        context['username'] = username
+        # context['password'] = password
+        
+        if user is not None and password == pwd and usr == username:
+            is_not_login = False
+            
+            return redirect('index')
+
+        elif (pwd != password and usr == username) or (pwd == password and usr != username) or (password != pwd and usr != username):
+            is_not_login = True
+            context['is_not_login'] = is_not_login
+            
+            return render(request, 'login.html', context)
+
+    return render(request, 'login.html', context)
+
+def createUser(request):
+    user_form = UserForm()
+
+    if request.method == 'POST':
+
+        User.objects.create(
+            username = request.POST.get('username'),
+            password = request.POST.get('password'),
+            role = request.POST.get('role'),
+            name = request.POST.get('name'),
+        )
+
+        return redirect('index')
+
+    context = {'user_form': user_form}
+    return render(request, 'user_form.html', context)
+
 
 def createCustomer(request):
     form = CustomerForm()
 
     if request.method == 'POST':
-
+        
         Customer.objects.create(
             customerID = request.POST.get('customerID'),
             name = request.POST.get('name'),
             sdt = request.POST.get('sdt'),
         )
 
-        
         return redirect('display')
 
     context = {'form': form}
     return render(request, 'customer_form.html', context)
+
+
 
 
 def display(request):
