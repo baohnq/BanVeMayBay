@@ -15,6 +15,7 @@
         {{schedule.flId.fromAp.apName}} to {{schedule.flId.toAp.apName}}
         |{{schedule.date|date:'Y-m-d'}}   
     </tr>
+    <a href="{% url 'schedule' schedule.id   %}"> Next</a>
 
     {% endfor %}
 {% endif %}

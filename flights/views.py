@@ -3,18 +3,57 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, When, F
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Customer, Schedule
 from .forms import CustomerForm 
-from .models import Airport, Flight, Ticket, Brand, Schedule
+from .models import Airport, Flight, Ticket, Brand, Schedule, User
 
 from datetime import datetime
 # Create your views here.
 
+def getCost(fromAP, toAP):
+    # if fromAP == 'LK':
+    #     return getCost(toAP,fromAP)
+
+    if fromAP == 'NB':
+        if toAP == 'TSN':
+            return 1500000
+        elif toAP == 'PQ':
+            return 1000000
+        elif toAP == 'CL':
+            return 1000000
+        elif toAP == 'LK':
+            return 1000000 
+    elif fromAP == 'TSN':
+        if toAP == 'PQ':
+            return 1500000
+        elif toAP == 'CL':
+            return 1000000
+        elif toAP == 'LK':
+            return 1000000
+    elif fromAP == 'PQ':
+        if toAP == 'CL':
+            return 1000000
+        elif toAP == 'LK':
+            return 1000000
+    elif fromAP == 'CL':
+        if toAP == 'LK':
+            return 1000000
+
+            
+    if fromAP == 'VN':
+        return 100000000
+    # return getCost(toAP,fromAP)
+    return 2323
+
+
 def createCustomer(request,scheduleID):
     form = CustomerForm()
+    schedule = Schedule.objects.get(id=scheduleID)
+    user = User.objects.get(username='tan2')
+
     if request.method == 'POST':
 
         Customer.objects.create(
@@ -22,19 +61,27 @@ def createCustomer(request,scheduleID):
             name = request.POST.get('name'),
             sdt = request.POST.get('sdt'),
         )
-
+        
+        Ticket.objects.create(
+            ticketId= schedule.flId.flId + '-0007',
+            flId= schedule,
+            date= schedule,
+            customID = Customer.objects.get(customerID=request.POST.get('customerID')),
+            booked= datetime.now(),
+            cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId),
+            staff= user
+        )
         return redirect('display')
 
-    context = {'form': form, "scheduleID":scheduleID}
+    context = {'form': form}
     return render(request, 'customer_form.html', context)
 
 
 def display(request):
-    i = Customer.objects.all()
+    i = Ticket.objects.all()
     context = {"info":i}
     return render(request,"display.html",context)
 
-<<<<<<< HEAD
 def schedule(request,pk):
     schedule = Schedule.objects.get(id=pk)
     context = {"schedule":schedule,"pk":pk}
@@ -43,7 +90,6 @@ def schedule(request,pk):
 
 
     
-=======
 #irports = ["HaNoi","HCM","DaNang","DaLat" ]
 # Create your views here.
 def index(request):
@@ -85,4 +131,3 @@ def index(request):
                 'is_search':is_search,
             }
     return render(request,'index.html',context)
->>>>>>> 31f3b0bc22c9277d26a34bf5213f0c8d4a1b341f

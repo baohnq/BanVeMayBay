@@ -60,3 +60,17 @@ class Ticket(models.Model):
     booked = models.DateTimeField(auto_now=True)
     cost = models.FloatField()
     staff = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Transit(models.Model):
+    flId = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    apId = models.ForeignKey(Airport,on_delete=models.CASCADE)
+    timeStop = models.FloatField()
+    note = models.TextField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['flId', 'apId'], name='unique_flId_apId_combination'
+            )
+        ]
