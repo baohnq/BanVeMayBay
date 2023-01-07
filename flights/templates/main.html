@@ -12,14 +12,14 @@
     <title>Document</title>
 </head>
 
-
 <header>
      
             <div class="banner banner2">
                 <div class="navbar">
-                    <a class="nav-item" href={% url 'index' %}>Đặt vé</a>
+                    <a class="nav-item" href={% url "index" %}>Đặt vé</a>
                     <a class="nav-item" href="">Báo cáo</a>
-                    <a class="nav-item" href="">Cập nhật chuyến bay</a>
+                    <a class="nav-item" href="{% url 'flight_list' %}">Danh sách chuyến bay</a>
+                    <a class="nav-item" href="{% url 'create_user' %}">Tạo tài khoản</a>
                 </div>
             </div>
 

@@ -23,6 +23,7 @@ class Airport(models.Model):
     apName = models.TextField(max_length=255)
     place = models.TextField(max_length=255)
 
+
 class Brand(models.Model):
     brId = models.CharField(max_length=2, primary_key=True)
     brName = models.TextField(max_length= 255)
