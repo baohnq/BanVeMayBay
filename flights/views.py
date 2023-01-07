@@ -12,44 +12,50 @@ from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer
 from datetime import datetime
 # Create your views here.
 
-def login(request):
+def loginPage(request):
+    if request.user.is_authenticated:
+            return redirect('index')
+        
+    
     # page = 'login'
     username = ''
     password = ''
     context = {}
-    is_not_login = False
-    
 
     if request.method == 'POST':
         # form
         username = request.POST.get('username').lower()
         password = request.POST.get('password')
+        # check_user = User.objects.filter(username=username, password=password)
 
         try:
             # database
-            user = User.objects.get(username=username)
-            usr = user.username
-            pwd = user.password
+            user = User.objects.filter(username=username, password=password)
             
-        except:
-            return render(request, 'login.html', context)
+        except:      
+            messages.add_message(request, messages.ERROR, 'No account found')
 
-        # user = authenticate(request, username=username, password=password)
-        context['username'] = username
-        # context['password'] = password
+        user = authenticate(request, username=username, password=password)
         
-        if user is not None and password == pwd and usr == username:
-            is_not_login = False
-            
+
+        context['username'] = username
+        context['password'] = password
+        # context['role'] = rl
+
+        if user is not None:
+            login(request, user)
             return redirect('index')
 
-        elif (pwd != password and usr == username) or (pwd == password and usr != username) or (password != pwd and usr != username):
-            is_not_login = True
-            context['is_not_login'] = is_not_login
+        else:
             
-            return render(request, 'login.html', context)
+            messages.add_message(request, messages.ERROR, 'Wrong username or password')
+            # return render(request, 'login.html', context)
 
     return render(request, 'login.html', context)
+
+def logoutPage(request):
+    logout(request)
+    return redirect('login')
 
 def createUser(request):
     user_form = UserForm()
@@ -85,15 +91,12 @@ def createCustomer(request):
     context = {'form': form}
     return render(request, 'customer_form.html', context)
 
-
-
-
 def display(request):
     i = Customer.objects.all()
     context = {"info":i}
     return render(request,"display.html",context)
 
-#irports = ["HaNoi","HCM","DaNang","DaLat" ]
+
 # Create your views here.
 def index(request):
     
