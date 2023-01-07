@@ -6,15 +6,17 @@
     {{firstClassRest}}|
     {{secondClassRest}}|
     {{cost}}
+    <br>
+    {% if transitAps.count > 0 %}
+        {% for transitAp in transitAps %}
 
-    {% for transitAp in transitAps %}
-
-        {{transitAp.apId.apName}}|
-    
-    {% endfor %}
+            {{transitAp.apId.apName}} <br>
+            
+        {% endfor %}
+    {% endif %}
 
 
  </tr>
 
- 
+
 <a href="{% url 'create_customer' pk  %}"> Create Customer</a>

@@ -7,7 +7,7 @@ from django.db.models import Q, When, F
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomerForm, UserForm, TicketForm
-from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer
+from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer, Transit
 
 from datetime import datetime
 # Create your views here.
@@ -158,7 +158,7 @@ def schedule_detail(request,pk):
 
     cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId)
 
-    transitAps =  []#Transit.objects.get(flId=flightID)
+    transitAps =  Transit.objects.filter(flId=flightID)
 
     firstClassRest = schedule.firstClassRest
     secondClassRest = schedule.secondClassRest
