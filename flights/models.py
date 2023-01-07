@@ -25,6 +25,7 @@ class Airport(models.Model):
     def __str__(self):
         return self.apName + "(" + self.place + ")"
 
+
 class Brand(models.Model):
     brId = models.CharField(max_length=2, primary_key=True)
     brName = models.TextField(max_length= 255)

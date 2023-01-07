@@ -25,6 +25,13 @@ main {
     flex-grow: 1;
 }
 
+.bannerbook {
+    position: relative;
+    background: url('../img/banner2.jpg') no-repeat top -150px center/cover;
+    transform: scaleX(-1);
+    height: 300px;
+}
+
 .banner {
     position: relative;
     background: url('../img/banner.jpg') no-repeat top -150px center/cover;
@@ -60,6 +67,18 @@ main {
     border-radius: 20px;
 }
 
+#form-detail {
+    position: absolute;
+    width: 60%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    transform:  translate(-50%, -50%) scaleX(-1);
+    background-color: #fff;
+    /* padding: 200px 200px; */
+    border-radius: 20px;
+}
+
 
 /* MAIN  */
 .banner2 {
@@ -69,6 +88,7 @@ main {
 
 /* SEARCH  */
 .table {
+    margin-top: 20px;
     background-color: white;
     width: 80%;
     /* left: 15%; */
