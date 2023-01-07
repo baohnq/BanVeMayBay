@@ -9,7 +9,7 @@
             <th scope="col">Sân bay đi</th>
             <th scope="col">Sân bay đến</th>
             <th scope="col">Ngày khởi hành</th>
-            <th scope="col">Chi tiết</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <!-- <br> -->
@@ -21,7 +21,7 @@
             <td>{{schedule.flId.fromAp.apName}}</td>
             <td>{{schedule.flId.toAp.apName}}</td>
             <td>{{schedule.date|date:'Y-m-d'}} </td>
-            <td> <a href="{% url 'schedule_detail' schedule.id %}"> Details</a> </td>
+            <td> <a href="{% url 'schedule_detail' schedule.id %}"> Chi tiết</a> </td>
         </tr>
         
         {% endfor %}
