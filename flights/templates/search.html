@@ -1,20 +1,31 @@
-
 {% if is_search == 1 %}
-    <tr>
-        Mã chuyến bay|
-        Hãng|
-        Hành Trình|
-        Ngày khởi hành
-    </tr>
-    <br>
-    {% for schedule in schedules %}
 
-    <tr>
-        {{schedule.flId.flId}}|
-        {{schedule.flId.brand.brName}}|
-        {{schedule.flId.fromAp.apName}} to {{schedule.flId.toAp.apName}}
-        |{{schedule.date|date:'Y-m-d'}}   
-    </tr>
-
-    {% endfor %}
+<body class="headsearch">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Mã chuyến bay</th>
+            <th scope="col">Hãng</th>
+            <th scope="col">Sân bay đi</th>
+            <th scope="col">Sân bay đến</th>
+            <th scope="col">Ngày khởi hành</th>
+            <th scope="col">Chi tiết</th>
+        </tr>
+    </thead>
+    <!-- <br> -->
+    <tbody>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{schedule.flId.flId}}</td>
+            <td>{{schedule.flId.brand.brName}}</td>
+            <td>{{schedule.flId.fromAp.apName}}</td>
+            <td>{{schedule.flId.toAp.apName}}</td>
+            <td>{{schedule.date|date:'Y-m-d'}} </td>
+            <td>  </td>
+        </tr>
+ 
+        {% endfor %}
+    </tbody>
+</table>
+</body>
 {% endif %}

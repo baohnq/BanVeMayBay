@@ -96,7 +96,9 @@ def display(request):
     context = {"info":i}
     return render(request,"display.html",context)
 
-
+def main(request):
+    return render(request,"main.html",)
+#irports = ["HaNoi","HCM","DaNang","DaLat" ]
 # Create your views here.
 def index(request):
     

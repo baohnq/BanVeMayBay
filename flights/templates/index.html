@@ -16,13 +16,18 @@
 
 <body>
     <div class="wrapper">
-        <header class="header"> header </header>
-        <a href="{% url 'logout' %}">logout</a>
+        <header class="header">
+            <a href="">
+                <img src="{% static '/assets/img/avt.jpg' %}" width="50px" alt="" style="border-radius:100%;">
+            </a>
+            <a href="{% url 'logout' %}">logout</a> 
+        </header>
+        
         <main>
             <div class="contaner">
                 <div class="banner">
                     <div class="navbar">
-                        <a class="nav-item active" href="./test.html">Đặt vé</a>
+                        <a class="nav-item active" href={% url "index" %}>Đặt vé</a>
                         <a class="nav-item" href="">Báo cáo</a>
                         <a class="nav-item" href="">Cập nhật chuyến bay</a>
                         <a class="nav-item" href="{% url 'create_user' %}">Tạo tài khoản</a>
@@ -41,7 +46,7 @@
                             <div class="col-md-4 ml-3">
                                 <div class="input-group mb-3">
                                     <select class="form-select" id="hanghe" name="class">
-                                        <option selected>Hang ghe</option>
+                                        <option selected>Hạng ghế</option>
                                         <option value="economy">Thường</option>
                                         <option value="bussiness">Thương gia</option>
                                     </select>
@@ -50,27 +55,21 @@
                             <div class="col-md-4 ml-3">
                                 <div class="input-group mb-3">
                                     <input class="form-control" type="number" name="seat_number" id="soluong" value="1" min=1 max=20>
-                                    <!-- {% comment %} <select class="form-select" id="soluong" name="soluong">
-                                        <option selected>So Luong</option>
-                                        <option value="1">Mot</option>
-                                        <option value="2">Hai</option>
-                                        <option value="3">Ba</option>
-                                    </select> {% endcomment %} -->
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3 mb-3">
-                                <label for="diemdi" class="form-label">Diem di</label>
+                                <label for="diemdi" class="form-label">Điểm đi</label>
                                 <select name="from" class="form-control" id="diemdi">
                                     <option selected>Chọn điểm đi</option>
                                     {% for airport in airports %}
-                                        <option value={{airport.idName}}>{{airport.apName}}</option><-->
+                                        <option value={{airport.idName}}>{{airport.apName}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="diemden" class="form-label">Diem den</label>
+                                <label for="diemden" class="form-label">Điểm đến</label>
                                 <select name="to" class="form-control" id="diemden">
                                     <option selected>Chọn điểm đến</option>
                                     {% for airport in airports %}
@@ -79,20 +78,19 @@
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="ngaydi" class="form-label">Ngay di</label>
+                                <label for="ngaydi" class="form-label">Ngày đi</label>
                                 <input type="date" name="departure_date" class="form-control" id="ngaydi" >
                                 
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="ngayden" class="form-label">Ngay ve</label>
+                                <label for="ngayden" class="form-label">Ngày về</label>
                                 <input type="date" name="arrival_date" class="form-control" id="ngayden" >
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 d-flex">
                                 <button type="submit" class="btn btn-primary mx-auto">Tìm kiếm</button>
-                                <!-- <a type="submit" class="btn btn-primary mx-auto" href="../searchnew.html">Tìm kiếm</a> -->
-                                <!-- {% include 'search.html' %} -->
+        
                             </div>
                         </div>
                     </form>
