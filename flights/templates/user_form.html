@@ -1,18 +1,48 @@
-{% extends 'main.html' %}
 
-{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 
-<div>
-    <form method="POST" action="">
-      {% csrf_token %} 
-      {{user_form.as_p}}
-      <input onclick="notify()" type="Submit" value="Submit" />
-    </form>
-</div>
-<script>
-  function notify() {
-    alert("User created!");
-  }
-  </script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href= "{% static '/assets/css/styte.css' %}">
+    <title>Document</title>
+</head>
 
-{% endblock content %}
+<header>
+     
+            <div class="banner banner2">
+                <div class="navbar">
+                    <a class="nav-item" href={% url "index" %}>Đặt vé</a>
+                    <a class="nav-item" href="">Báo cáo</a>
+                    <a class="nav-item" href="{% url 'flight_list' %}">Danh sách chuyến bay</a>
+                    <a class="nav-item active" href="{% url 'create_user' %}">Tạo tài khoản</a>
+                </div>
+            </div>
+            <div>
+              <form method="POST" action="">
+                {% csrf_token %} 
+                {{user_form.as_p}}
+                <input onclick="notify()" type="Submit" value="Submit" />
+              </form>
+          </div>
+          <script>
+            function notify() {
+              alert("User created!");
+            }
+            </script>
+
+</header>
+<body>
+    
+    {% block content%}
+
+    {% endblock %}
+
+</body>
+
+</html>

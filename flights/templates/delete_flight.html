@@ -1,0 +1,7 @@
+<form method="POST" action="">
+    {% csrf_token %}
+    <p>Muốn xóa chuyến bay số hiệu {{flight.flId}} ?</p>
+
+    <a href="{{request.META.HTTP_REFERER}}">Không</a>
+    <input type="submit" value="Có" />
+</form>
