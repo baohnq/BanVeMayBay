@@ -25,6 +25,13 @@ main {
     flex-grow: 1;
 }
 
+.bannerbook {
+    position: relative;
+    background: url('../img/banner2.jpg') no-repeat top -150px center/cover;
+    transform: scaleX(-1);
+    height: 300px;
+}
+
 .banner {
     position: relative;
     background: url('../img/banner.jpg') no-repeat top -150px center/cover;
