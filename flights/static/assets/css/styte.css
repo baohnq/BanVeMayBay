@@ -69,6 +69,7 @@ main {
 
 /* SEARCH  */
 .table {
+    margin-top: 20px;
     background-color: white;
     width: 80%;
     /* left: 15%; */

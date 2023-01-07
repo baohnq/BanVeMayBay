@@ -14,7 +14,7 @@ from datetime import datetime
 
 def loginPage(request):
     if request.user.is_authenticated:
-            return redirect('index')
+            return redirect('main')
         
     
     # page = 'login'
@@ -44,7 +44,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('main')
 
         else:
             
