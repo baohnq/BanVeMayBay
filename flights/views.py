@@ -123,14 +123,23 @@ def createCustomer(request,scheduleID):
             sdt = request.POST.get('sdt'),
         )
         
-        Ticket.objects.create(
-            ticketId= schedule.flId.flId + '-' + str(Ticket.objects.count()),
-            schedule = schedule,
-            customID = Customer.objects.get(customerID=request.POST.get('customerID')),
-            booked= datetime.now(),
-            cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId),
-            staff= user
-        )
+        while setting.seat_number > 0:
+            Ticket.objects.create(
+                ticketId= schedule.flId.flId + '-' + str(Ticket.objects.count()),
+                schedule = schedule,
+                customID = Customer.objects.get(customerID=request.POST.get('customerID')),
+                booked= datetime.now(),
+                cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId),
+                staff= user
+            )
+            
+            setting.seat_number -=1
+            if str(setting.class_fl) == 'economy':
+                schedule.firstClassRest -=  1
+            else:
+                t = schedule.secondClassRest
+                schedule.secondClassRest -= 1
+            schedule.save()
 
         return redirect('ticket')
 
