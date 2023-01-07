@@ -6,6 +6,14 @@
     box-sizing: border-box;
 }
 
+p.bold {
+    font-weight: bold;
+    color: blue;
+    text-align:center;
+    font-size: 30px;
+
+  }
+
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -63,7 +71,7 @@ main {
     top: 60%;
     transform:  translate(-50%, -50%) scaleX(-1);
     background-color: #fff;
-    padding: 31px 15px;
+    padding: 25px 15px;
     border-radius: 20px;
 }
 
@@ -75,7 +83,19 @@ main {
     top: 50%;
     transform:  translate(-50%, -50%) scaleX(-1);
     background-color: #fff;
-    /* padding: 200px 200px; */
+    padding: 25px 15px;
+    border-radius: 20px;
+}
+
+#cf {
+    position: absolute;
+    width: 60%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    transform:  translate(-50%, -50%) scaleX(-1);
+    background-color: #fff;
+    padding: 25px 15px;
     border-radius: 20px;
 }
 
@@ -102,3 +122,6 @@ tr {
   .headsearch{
     background-color: pink;
   }
+
+
+

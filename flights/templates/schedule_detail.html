@@ -24,25 +24,88 @@
             <a class="nav-item" href="">Cập nhật chuyến bay</a>
         </div>
         <form action="" id="form-detail" class="shadow">
-            <tr>
-                {{flightID}}|
-                {{brName}}|
-                {{fromAp}}({{fromPos}}) to {{toAp}}({{toPos}})|
-                {{time}}|
-                {{firstClassRest}}|
-                {{secondClassRest}}|
-                {{cost}}
-                <br>
-                {% if transitAps.count > 0 %}
-                {% for transitAp in transitAps %}
+            <div class="row">
+                
+                <p class="bold">Chi tiết chuyến bay</p>
 
-                {{transitAp.apId.apName}} <br>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-2">
+                    <div class="input-group mb-2">
+                        <label for="chuyenbay" class="form-label">     Chuyến Bay   :</label>
+                        <!-- <tr> -->
+                            {{flightID}}
+                        <!-- </tr> -->
+                    </div>
+                </div>
+                <div class="col-md-6 ml-2">
+                    <div class="input-group mb-2">
+                        <label for="hanghangkhong" class="form-label">Hãng hàng không    :</label>
+                        <!-- <tr> -->
+                            {{brName}}
+                        <!-- </tr> -->
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-4 ml-3">
+                    <div class="input-group mb-3">
+                        <label for="noidi" class="form-label">     Điểm đi   :</label>
+                        <!-- <tr> -->
+                            {{fromAp}}({{fromPos}})
+                        <!-- </tr> -->
+                    </div>
+                </div>
+                <div class="col-md-4 ml-2">
+                    <div class="input-group mb-3">
+                        <label for="noiden" class="form-label">Điểm đến     :</label>
+                        <!-- <tr> -->
+                            {{toAp}}({{toPos}})
+                        <!-- </tr> -->
+                    </div>
+                </div>
+                <div class="col-md-4 ml-2">
+                    <div class="input-group mb-3">
+                        <label for="thoigian" class="form-label">Thời gian     :</label>
+                        <!-- <tr> -->
+                            {{time}}
+                        <!-- </tr> -->
+                    </div>
+                </div>
+            </div>
 
-                {% endfor %}
-                {% endif %}
-                <a href="{% url 'create_customer' pk  %}"> Create Customer</a>
+            <div class="row">
+                <div class="col-md-6 ml-2">
+                    <div class="input-group mb-2">
+                        <label for="chair1" class="form-label">     Tổng số ghế hạng thương gia   :</label>
+                        <!-- <tr> -->
+                            {{firstClassRest}}
+                        <!-- </tr> -->
+                    </div>
+                </div>
+                <div class="col-md-6 ml-2">
+                    <div class="input-group mb-2">
+                        <label for="chair2" class="form-label">Tổng số ghế hạng thương gia    :</label>
+                        <!-- <tr> -->
+                            {{secondClassRest}}
+                        <!-- </tr> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="input-group mb-1">
+                        <label for="cost" class="form-label">Giá    :</label>
+                        {{cost}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{% url 'create_customer' pk  %}"> Đặt vé</a>
+                </div>
+            </div>
 
-            </tr>
         </form>
     </div>
 

@@ -1,6 +1,58 @@
-<div>
+<!-- <div>
     <form method="POST" action="">
       {% csrf_token %} {{form.as_p}}
       <input type="Submit" value="Submit" />
     </form>
+  </div> -->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static '/assets/css/styte.css' %}">
+  <title>Document</title>
+</head>
+
+
+<header>
+</header>
+
+<body>
+  <div class="banner banner2">
+    <div class="navbar">
+      <a class="nav-item" href={% url 'index' %}>Đặt vé</a>
+      <a class="nav-item" href="">Báo cáo</a>
+      <a class="nav-item" href="">Cập nhật chuyến bay</a>
+    </div>
+    
+    <!-- <form form action="" id="cf" class="shadow">
+      <div class="row">
+        <p class="bold">Thông tin hành khách</p>
+      </div>
+      <div class="half left cf">
+        <input type="text" id="input-name" placeholder="Name">
+        <input type="email" id="input-email" placeholder="Email address">
+        <input type="text" id="input-subject" placeholder="Subject">
+      </div>
+      <div class="half right cf">
+        <textarea name="message" type="text" id="input-message" placeholder="Message"></textarea>
+      </div>
+      <input type="submit" value="Submit" id="input-submit">
+    </form> -->
+    <div>
+      <form id="cf" method="POST" action="">
+        {% csrf_token %} {{form.as_p}}
+        <input type="Submit" value="Submit" />
+      </form>
+    </div>
   </div>
+
+</body>
+
+</html>
