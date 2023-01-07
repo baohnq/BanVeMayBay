@@ -5,6 +5,7 @@ Web Đặt vé máy bay cho đại lý - NMCNPM_Gr25
 Python Django 7 Hour Course
 
 https://www.youtube.com/watch?v=PtQiiknWUcI
+
 https://github.com/divanov11/StudyBud/
 
 # Môi trường thực thi
