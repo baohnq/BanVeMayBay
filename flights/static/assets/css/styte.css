@@ -75,10 +75,32 @@ main {
     border-radius: 20px;
 }
 
+#form-update-fl {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform:  translate(-50%, -50%) scaleX(-1);
+    background-color: #fff;
+    padding: 25px 60px;
+    border-radius: 20px;
+}
+
 #form-detail {
     position: absolute;
     width: 60%;
     height: 50%;
+    left: 50%;
+    top: 50%;
+    transform:  translate(-50%, -50%) scaleX(-1);
+    background-color: #fff;
+    padding: 25px 15px;
+    border-radius: 20px;
+}
+
+#form_fl_list {
+    position: absolute;
+    width: 160vh;
+    height: 70vh;
     left: 50%;
     top: 50%;
     transform:  translate(-50%, -50%) scaleX(-1);
@@ -114,6 +136,7 @@ main {
     /* left: 15%; */
     transform:  translate(13%, 0%);
 }
+
 
 tr {
     text-align: center;
