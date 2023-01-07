@@ -20,11 +20,11 @@ https://github.com/divanov11/StudyBud/
 - Thêm khách hàng
 - Chức năng CRUD của các màn hình 
 
--- Vé chuyến bay
+  -- Vé chuyến bay
 
--- Lịch bay
+  -- Lịch bay
 
--- Chuyến bay
+  -- Chuyến bay
 - File HTML và CSS hiển thị các màn hình  
 
 # Những mục cần làm thêm
