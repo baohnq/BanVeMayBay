@@ -19,8 +19,11 @@ https://github.com/divanov11/StudyBud/
 - Màn hình và chức năng tìm kiếm chuyến bay
 - Thêm khách hàng
 - Chức năng CRUD của các màn hình 
+
 -- Vé chuyến bay
+
 -- Lịch bay
+
 -- Chuyến bay
 - File HTML và CSS hiển thị các màn hình  
 
