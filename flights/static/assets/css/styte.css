@@ -67,6 +67,18 @@ main {
     border-radius: 20px;
 }
 
+#form-detail {
+    position: absolute;
+    width: 60%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    transform:  translate(-50%, -50%) scaleX(-1);
+    background-color: #fff;
+    /* padding: 200px 200px; */
+    border-radius: 20px;
+}
+
 
 /* MAIN  */
 .banner2 {
@@ -76,6 +88,7 @@ main {
 
 /* SEARCH  */
 .table {
+    margin-top: 20px;
     background-color: white;
     width: 80%;
     /* left: 15%; */

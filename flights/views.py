@@ -14,7 +14,7 @@ from datetime import datetime
 
 def loginPage(request):
     if request.user.is_authenticated:
-            return redirect('index')
+            return redirect('main')
         
     
     # page = 'login'
