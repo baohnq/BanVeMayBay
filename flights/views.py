@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import CustomerForm, UserForm, TicketForm, FlightForm
 from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer, Transit
 
-from datetime import datetime
+from datetime import datetime,date
 # Create your views here.
 
 def loginPage(request):
@@ -319,6 +319,43 @@ def flights_list(request):
     context = {"flights":flights}
     return render(request, "flight_list.html", context)
 
+def addFlight(request):
+    flight_form = FlightForm
+    airports = Airport.objects.all()
+    brands = Brand.objects.all()
+    
+    if request.method == "POST":
+        brand = Brand.objects.get(brId=request.POST.get('brand'))
+        fromAp = Airport.objects.get(apId=request.POST.get('fromAp'))
+        toAp = Airport.objects.get(apId=request.POST.get('toAp'))
+        flTime = request.POST.get('flTime')
+
+        flight_in_dtb = Flight.objects.filter(brand=brand)
+        flight_count = flight_in_dtb.count() + 1
+        today = date.today()
+        year = str(today.year)[2:4]
+
+        autoId = str(brand.brId)
+        autoId += year
+        autoId += '-'
+        num = '000'+str(flight_count) if flight_count < 10 else '00'+str(flight_count)
+        autoId += num
+
+        Flight.objects.create(
+            fromAp = fromAp,
+            toAp = toAp,
+            flTime = flTime,
+            brand = brand, 
+            flId = str(autoId)
+        )
+        print(autoId)
+        flights = Flight.objects.all()
+        context = {'flights':flights}
+        return render(request, "flight_list.html", context)  
+
+    context = {'airports':airports, 'brands':brands  }
+    return render(request, 'add_flight.html', context)
+
 def updateFlight(request, pk):
     flight = Flight.objects.get(flId=pk)
     form = FlightForm(instance=flight)
@@ -345,5 +382,5 @@ def deleteFlight(request, pk):
         flight.delete()
         return redirect('flight_list')
 
-    context = {"flight":flight}
-    return render(request, "delete_flight.html", context)
+    context = {"obj":flight}
+    return render(request, "delete.html", context)

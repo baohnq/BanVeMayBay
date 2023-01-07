@@ -24,6 +24,7 @@ urlpatterns =[
     path('delete_ticket/<str:pk>/',  views.deleteTicket, name="delete_ticket"),
 
     path('flight_list/', views.flights_list, name='flight_list'),
+    path('add_flight/', views.addFlight, name='add_flight'),
     path('update_flight/<str:pk>/', views.updateFlight, name='update_flight'),
     path('delete_flight/<str:pk>/', views.deleteFlight, name='delete_flight'),
 ]
