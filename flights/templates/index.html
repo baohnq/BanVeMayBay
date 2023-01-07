@@ -16,8 +16,13 @@
 
 <body>
     <div class="wrapper">
-        <header class="header"> header </header>
-        <a href="{% url 'logout' %}">logout</a>
+        <header class="header">
+            <a href="">
+                <img src="{% static '/assets/img/avt.jpg' %}" width="50px" alt="" style="border-radius:100%;">
+            </a>
+            <a href="{% url 'logout' %}">logout</a> 
+        </header>
+        
         <main>
             <div class="contaner">
                 <div class="banner">
