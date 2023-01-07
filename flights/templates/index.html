@@ -29,7 +29,8 @@
                     <div class="navbar">
                         <a class="nav-item active" href={% url "index" %}>Đặt vé</a>
                         <a class="nav-item" href="">Báo cáo</a>
-                        <a class="nav-item" href="{% url 'flight_list' %}">Danh sách chuyến bay</a>
+                        <a class="nav-item" href="{% url 'flight_list' %}">Chuyến bay</a>
+                        <a class="nav-item" href="{% url 'schedules' %}">Lịch bay</a>
                         <a class="nav-item" href="{% url 'create_user' %}">Tạo tài khoản</a>
                     </div>
                     <form action="" id="form-search" class="shadow">
@@ -39,13 +40,12 @@
                                     <label for="loaive" class="form-label">Loại vé</label>
                                     <!-- <br> -->
                                     <select class="form-select" id="loaive" name="ticket_type" value="typeTicket">
-
-
+                                        
                                         {% if ticket_type == '' or ticket_type == 'one way' %}
-                                        <option value="one way">Một chiều</option>
+                                        <option selected="one way">Một chiều</option>
                                         <option value="round trip">Khứ hồi</option>
                                         {% else %}
-                                        <option value="round trip">Khứ hồi</option>
+                                        <option selected="round trip">Khứ hồi</option>
                                         <option value="one way">Một chiều</option>
                                         {% endif %}
 
@@ -61,10 +61,10 @@
                                         <!-- <option selected>Hạng ghế</option> -->
                                         
                                         {% if class_fl == '' or class_fl == 'economy' %}
-                                        <option value="economy">Thường</option>
+                                        <option selected="economy">Thường</option>
                                         <option value="bussiness">Thương gia</option>
                                         {% else %}
-                                        <option value="bussiness">Thương gia</option>
+                                        <option selected="bussiness">Thương gia</option>
                                         <option value="economy">Thường</option>
                                         {% endif %}
 
@@ -82,48 +82,41 @@
                             <div class="col-md-3 mb-3">
                                 <label for="diemdi" class="form-label">Điểm đi</label>
                                 <select name="from" class="form-control" id="diemdi">
-                                    
-                                    {% if from_ap == None %}
-                                    <option selected>Chọn điểm đi</option>
+                                    {% if to_ap == None %}
+                                        <option selected>Chọn điểm đi</option>
+                                    {%endif%}
                                     {% for airport in airports %}
+                                        {% if airport.apId == from_ap %}
+                                        <option selected  value="{{airport.apId}}">{{airport.apName}}</option>
+                                        {% else %}
                                         <option value={{airport.apId}}>{{airport.apName}}</option>
+                                        {% endif %}
                                     {% endfor %}
-                                    {% else %}
-                                    <option value={{temp_fAp.apId}}>{{temp_fAp.apName}}</option>
-                                    {% for airport in airports %}
-                                        <option value={{airport.apId}}>{{airport.apName}}</option>
-                                    {% endfor %}
-                                    {% endif %}
-
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="diemden" class="form-label">Điểm đến</label>
                                 <select name="to" class="form-control" id="diemden">
-                                   
-
                                     {% if to_ap == None %}
-                                    <option selected>Chọn điểm đi</option>
-                                    {% for airport in airports %}
-                                        <option value={{airport.apId}}>{{airport.apName}}</option>
-                                    {% endfor %}
-                                    {% else %}
-                                    <option value={{temp_tAp.apId}}>{{temp_tAp.apName}}</option>
-                                    {% for airport in airports %}
-                                        <option value={{airport.apId}}>{{airport.apName}}</option>
-                                    {% endfor %}
+                                    <option selected>Chọn điểm đến</option>
                                     {% endif %}
-
+                                    {% for airport in airports %}
+                                        {% if airport.apId == to_ap %}
+                                        <option selected value="{{airport.apId}}">{{airport.apName}}</option>
+                                        {% else %}
+                                        <option value={{airport.apId}}>{{airport.apName}}</option>
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="ngaydi" class="form-label">Ngày đi</label>
-                                <input type="date" name="departure_date" class="form-control" id="ngaydi" value= "{{departure_date|date:'Y-m-d'}}" >
+                                <input type="date" name="departure_date" class="form-control" id="ngaydi" value= "{{departure_date|date:'Y-m-d'}}" min="{{current_date|date:'Y-m-d'}}">
                                 
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="ngayden" class="form-label">Ngày về</label>
-                                <input type="date" name="arrival_date" class="form-control" id="ngayden" >
+                                <input type="date" name="arrival_date" class="form-control" id="ngayden" value= "{{arrival_date|date:'Y-m-d'}}" min="{{current_date|date:'Y-m-d'}}">
                             </div>
                         </div>
                         <div class="row">

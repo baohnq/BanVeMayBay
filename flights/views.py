@@ -9,11 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import CustomerForm, UserForm, TicketForm, FlightForm
 from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer, Transit
 
-from datetime import datetime,date
+from datetime import datetime, date, timedelta
 # Create your views here.
-
-
-
 
 def loginPage(request):
     # if request.user.is_authenticated:
@@ -62,7 +59,7 @@ def logoutPage(request):
 
 def createUser(request):
     user_form = UserForm()
-
+    print(request.user)
     if request.method == 'POST':
 
         User.objects.create(
@@ -107,14 +104,11 @@ def getCost(fromAP, toAP):
             return 1900000
 
     return getCost(toAP,fromAP)
-  
-
 
 def createCustomer(request,scheduleID):
     form = CustomerForm()
     schedule = Schedule.objects.get(id=scheduleID)
     user = request.user
-
     if request.method == 'POST':
         
         Customer.objects.create(
@@ -146,16 +140,15 @@ def createCustomer(request,scheduleID):
     context = {'form': form}
     return render(request, 'customer_form.html', context)
 
+def schedules(request):
+    schedules = Schedule.objects.all()
+    context = {'schedules':schedules}
+    return render(request,'schedules.html',context)
 
-temp = 'dfdff'
-def display(request):
+current_day = datetime.now().date()
 
-
-    context = {"info":temp}
-    return render(request,"display.html",context)
-
-
-def create_schedule(request):
+@login_required(login_url='login')
+def create_schedule(request):   
     page = 'create'
     flights = Flight.objects.all()
     
@@ -175,11 +168,14 @@ def create_schedule(request):
             firstClass=firstClass,
             secondClass=secondClass
         )
-        return redirect('index')
+        return redirect('schedules')
             
-    context = {'flights':flights, 'page':page}
+    context = {'flights':flights, 
+               'page':page,
+               'current_date':current_day}
     return render(request,'schedule_form.html',context)
 
+@login_required(login_url='login')
 def update_schedule(request,schedule_id):
     page = 'update'
     flights = Flight.objects.all()
@@ -197,20 +193,21 @@ def update_schedule(request,schedule_id):
         schedule.firstClass=firstClass
         schedule.secondClass=secondClass
         schedule.save()
-        return redirect('index')
+        return redirect('schedules')
     
     context = {'flights':flights, 'page':page, 'schedule':schedule}
     return render(request,'schedule_form.html',context)
 
-def deleteSchedule(request, schedule_id):
-    schedule = Schedule.objects.get(ticketId=schedule_id)
+@login_required(login_url='login')
+def delete_schedule(request, schedule_id):
+    schedule = Schedule.objects.get(id=schedule_id)
 
     # if request.user != message.user:
     #     return HttpResponse('Your are not allowed here!!')
 
     if request.method == 'POST':
         schedule.delete()
-        return redirect('index')
+        return redirect('schedules')
 
     context = {"obj":schedule}
     return render(request, "delete.html", context)
@@ -241,7 +238,6 @@ def schedule_detail(request,pk):
                  "time":time, "brName":brName, "cost":cost, "transitAps": transitAps, "firstClassRest":firstClassRest, "secondClassRest":secondClassRest}
     return render(request,"schedule_detail.html",context)
 
-
 def ticket(request):
     tickets = Ticket.objects.all()
     context = {"tickets":tickets}
@@ -270,7 +266,6 @@ def updateTicket(request, pk):
     context = {"form":form, "schedules":schedules, "customers":customers, "ticket":ticket}
     return render(request, "update_ticket.html", context)
 
-
 def deleteTicket(request, pk):
     ticket = Ticket.objects.get(ticketId=pk)
 
@@ -293,8 +288,8 @@ class setting:
     seat_number = ''
     from_ap = ''
     to_ap = ''
-    departure_date = datetime.now().date().strftime('%Y-%m-%d')
-
+    departure_date = datetime.now().date()
+    arrival_date =  (datetime.now() + timedelta(days=7)).date()
 # Create your views here.
 def index(request):
     airports = Airport.objects.all()
@@ -314,7 +309,8 @@ def index(request):
         setting.to_ap = request.GET.get('to')
         if not (request.GET.get('departure_date') is None):
             setting.departure_date = datetime.strptime(request.GET.get('departure_date'),'%Y-%m-%d').date() 
-
+        if not (request.GET.get('arrival_date') is None):
+            setting.arrival_date = datetime.strptime(request.GET.get('arrival_date'),'%Y-%m-%d').date()
         # retrive ticket
         if setting.ticket_type == 'one way':
             schedules = Schedule.objects.filter(
@@ -344,6 +340,7 @@ def index(request):
                 'airports':airports,
                 'schedules': schedules,
                 'departure_date':setting.departure_date,
+                'arrival_date':setting.arrival_date,
                 'is_search':is_search,
                 'ticket_type': setting.ticket_type,
                 'class_fl': setting.class_fl,
@@ -352,6 +349,7 @@ def index(request):
                 'to_ap': setting.to_ap,
                 'temp_fAp': temp_fAp,
                 'temp_tAp': temp_tAp,
+                'current_date':current_day
             }
     return render(request,'index.html',context)
 

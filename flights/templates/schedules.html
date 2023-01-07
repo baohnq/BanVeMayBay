@@ -1,0 +1,9 @@
+<a href="{% url 'create_schedule' %}">Tạo lịch bay</a>
+<br><br>
+{% for schedule in schedules %}
+    <div>
+    Mã chuyến bay: {{schedule.flId.flId}} | {{schedule.flId.fromAp}} đến {{schedule.flId.toAp}} | Số vé hạng thường:{{schedule.firstClass}}|Số vé hạng thương gia:{{schedule.secondClass}} 
+    <a href="{% url 'update_schedule' schedule.id %}">Cập nhật</a>
+    <a href="{% url 'delete_schedule' schedule.id %}">Xóa</a>
+    </div>
+{% endfor %}
