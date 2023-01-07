@@ -1,6 +1,8 @@
+<a href="{% url 'index'  %}"> Home</a>
+<br>
 {% for ticket in tickets %}
 
-    {{ticket.ticketId}} | {{ticket.flId.flId.fromAp.apName}} to {{ticket.flId.flId.toAp.apName}} | {{ticket.date.date}} | {{ticket.customID.name}}
+    {{ticket.ticketId}} | {{ticket.schedule.flId.fromAp.apName}} to {{ticket.schedule.flId.toAp.apName}} | {{ticket.schedule.date}} | {{ticket.customID.name}}
     <a href="{% url 'update_ticket' ticket.ticketId %}"> Update</a>
     <a href="{% url 'delete_ticket' ticket.ticketId  %}"> Delete</a>
     <br>

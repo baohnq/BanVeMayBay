@@ -16,5 +16,7 @@
         |{{schedule.date|date:'Y-m-d'}}   
     </tr>
 
+    <a href="{% url 'schedule_detail' schedule.id %}"> Details</a>
+
     {% endfor %}
 {% endif %}

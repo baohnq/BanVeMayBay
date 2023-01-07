@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Customer, User
+from .models import Customer, User, Ticket
 
 class CustomerForm(ModelForm):
     class Meta:
@@ -12,3 +12,8 @@ class UserForm(ModelForm):
         model = User
         fields = ['username', 'password', 'name']
         # exclude = ['email', 'first_name', 'last_name', 'date_joined', 'last_login', 'is_superuser', 'is_staff', 'is_active']
+
+class TicketForm(ModelForm):
+    class Meta:
+        model = Ticket
+        fields = '__all__'
