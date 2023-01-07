@@ -56,13 +56,29 @@ main {
     top: 60%;
     transform:  translate(-50%, -50%) scaleX(-1);
     background-color: #fff;
-    padding: 30px 15px;
+    padding: 31px 15px;
     border-radius: 20px;
 }
 
 
-
-
+/* MAIN  */
+.banner2 {
+    height: 100vh;
+}
 
 
 /* SEARCH  */
+.table {
+    background-color: white;
+    width: 80%;
+    /* left: 15%; */
+    transform:  translate(13%, 0%);
+}
+
+tr {
+    text-align: center;
+  }
+
+  .headsearch{
+    background-color: pink;
+  }

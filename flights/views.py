@@ -129,6 +129,7 @@ def createCustomer(request,scheduleID):
             cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId),
             staff= user
         )
+
         return redirect('ticket')
 
     context = {'form': form}
@@ -192,8 +193,6 @@ def updateTicket(request, pk):
         ticket.save()
         return redirect('ticket')
 
-    # context = {'form': form, 'topics': topics, 'ticket': ticket}
-
 
     context = {"form":form, "schedules":schedules, "customers":customers, "ticket":ticket}
     return render(request, "update_ticket.html", context)
@@ -211,6 +210,9 @@ def deleteTicket(request, pk):
 
     context = {"obj":ticket}
     return render(request, "delete_ticket.html", context)
+
+def main(request):
+    return render(request,"main.html",)
 
 # Create your views here.
 def index(request):
