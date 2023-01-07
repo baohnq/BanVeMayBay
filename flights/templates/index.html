@@ -36,19 +36,37 @@
                         <div class="row">
                             <div class="col-md-4 ml-3">
                                 <div class="input-group mb-3">
-                                    <select class="form-select" id="loaive" name="ticket_type">
-                                        <option selected>Loại vé</option>
+                                    <label>Loại vé</label>
+                                    <br>
+                                    <select class="form-select" id="loaive" name="ticket_type" value="typeTicket">
+
+
+                                        {% if ticket_type == '' or ticket_type == 'one way' %}
                                         <option value="one way">Một chiều</option>
                                         <option value="round trip">Khứ hồi</option>
+                                        {% else %}
+                                        <option value="round trip">Khứ hồi</option>
+                                        <option value="one way">Một chiều</option>
+                                        {% endif %}
+
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4 ml-3">
                                 <div class="input-group mb-3">
+                                    <label>Hạng ghế</label>
+                                    <br>
                                     <select class="form-select" id="hanghe" name="class">
-                                        <option selected>Hạng ghế</option>
+                                        <!-- <option selected>Hạng ghế</option> -->
+                                        
+                                        {% if class_fl == '' or class_fl == 'economy' %}
                                         <option value="economy">Thường</option>
                                         <option value="bussiness">Thương gia</option>
+                                        {% else %}
+                                        <option value="bussiness">Thương gia</option>
+                                        <option value="economy">Thường</option>
+                                        {% endif %}
+
                                     </select>
                                 </div>
                             </div>
@@ -62,24 +80,43 @@
                             <div class="col-md-3 mb-3">
                                 <label for="diemdi" class="form-label">Điểm đi</label>
                                 <select name="from" class="form-control" id="diemdi">
+                                    
+                                    {% if from_ap == None %}
                                     <option selected>Chọn điểm đi</option>
                                     {% for airport in airports %}
-                                        <option value={{airport.idName}}>{{airport.apName}}</option>
+                                        <option value={{airport.apId}}>{{airport.apName}}</option>
                                     {% endfor %}
+                                    {% else %}
+                                    <option value={{temp_fAp.apId}}>{{temp_fAp.apName}}</option>
+                                    {% for airport in airports %}
+                                        <option value={{airport.apId}}>{{airport.apName}}</option>
+                                    {% endfor %}
+                                    {% endif %}
+
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="diemden" class="form-label">Điểm đến</label>
                                 <select name="to" class="form-control" id="diemden">
-                                    <option selected>Chọn điểm đến</option>
+                                   
+
+                                    {% if to_ap == None %}
+                                    <option selected>Chọn điểm đi</option>
                                     {% for airport in airports %}
-                                        <option value={{airport.idName}}>{{airport.apName}}</option>
+                                        <option value={{airport.apId}}>{{airport.apName}}</option>
                                     {% endfor %}
+                                    {% else %}
+                                    <option value={{temp_tAp.apId}}>{{temp_tAp.apName}}</option>
+                                    {% for airport in airports %}
+                                        <option value={{airport.apId}}>{{airport.apName}}</option>
+                                    {% endfor %}
+                                    {% endif %}
+
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="ngaydi" class="form-label">Ngày đi</label>
-                                <input type="date" name="departure_date" class="form-control" id="ngaydi" >
+                                <input type="date" name="departure_date" class="form-control" id="ngaydi" value= "{{departure_date|date:'Y-m-d'}}" >
                                 
                             </div>
                             <div class="col-md-3 mb-3">

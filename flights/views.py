@@ -12,6 +12,9 @@ from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer, Tr
 from datetime import datetime
 # Create your views here.
 
+
+
+
 def loginPage(request):
     if request.user.is_authenticated:
             return redirect('index')
@@ -111,7 +114,7 @@ def getCost(fromAP, toAP):
 def createCustomer(request,scheduleID):
     form = CustomerForm()
     schedule = Schedule.objects.get(id=scheduleID)
-    user = User.objects.get(username='tan')
+    user = request.user
 
     if request.method == 'POST':
         
@@ -136,9 +139,11 @@ def createCustomer(request,scheduleID):
     return render(request, 'customer_form.html', context)
 
 
+temp = 'dfdff'
 def display(request):
-    i = Customer.objects.all()
-    context = {"info":i}
+
+
+    context = {"info":temp}
     return render(request,"display.html",context)
 
 
@@ -214,43 +219,73 @@ def deleteTicket(request, pk):
 def main(request):
     return render(request,"main.html",)
 
+class setting:
+    ticket_type = 'one way'
+    class_fl = 'economy'
+    seat_number = ''
+    from_ap = ''
+    to_ap = ''
+    departure_date = datetime.now().date().strftime('%Y-%m-%d')
+
 # Create your views here.
 def index(request):
-    
     airports = Airport.objects.all()
     schedules = {}
-    departure_date = ''
+    #setting.departure_date = ''
     is_search = 0
+    temp_fAp= ''
+    temp_tAp= ''
     if request.method == 'GET':
-        ticket_type = request.GET.get('ticket_type')
-        class_fl = request.GET.get('class')
+        setting.ticket_type = request.GET.get('ticket_type')
+        setting.class_fl = request.GET.get('class')
         if request.GET.get('seat_number') != None:
-            seat_number = int(request.GET.get('seat_number'))
-        from_ap = request.GET.get('from')
-        to_ap = request.GET.get('to')
+            setting.seat_number = int(request.GET.get('seat_number'))
+
+        setting.from_ap = request.GET.get('from')
+        
+        setting.to_ap = request.GET.get('to')
         if not (request.GET.get('departure_date') is None):
-            departure_date = datetime.strptime(request.GET.get('departure_date'),'%Y-%m-%d').date() 
+            setting.departure_date = datetime.strptime(request.GET.get('departure_date'),'%Y-%m-%d').date() 
+
         # retrive ticket
-        if ticket_type == 'one way':
+        if setting.ticket_type == 'one way':
             schedules = Schedule.objects.filter(
-                Q(date=departure_date),
-                Q(flId__fromAp__apId__contains=from_ap),
-                Q(flId__toAp__apId__contains=to_ap)
+                Q(date=setting.departure_date),
+                Q(flId__fromAp__apId__contains=setting.from_ap),
+                Q(flId__toAp__apId__contains=setting.to_ap)
             )
             
-            if class_fl=='economy':
-                schedules = schedules.filter(Q(firstClassRest__gte=seat_number))
+            if setting.class_fl=='economy':
+                schedules = schedules.filter(Q(firstClassRest__gte=setting.seat_number))
             else:
-                schedules = schedules.filter(Q(secondClassRest__gte=seat_number))
+                schedules = schedules.filter(Q(secondClassRest__gte=setting.seat_number))
             
             is_search = 1
+
+            if Airport.objects.get(apId=setting.from_ap) != None:
+                temp_fAp = Airport.objects.get(apId=setting.from_ap)
+            if Airport.objects.get(apId=setting.from_ap) != None:
+                temp_tAp = Airport.objects.get(apId=setting.to_ap)  
+
         # else ticket_type = 'round trip'
         else:
             pass
+
+    
     context = {
                 'airports':airports,
                 'schedules': schedules,
-                'departure_date':departure_date,
+                'departure_date':setting.departure_date,
                 'is_search':is_search,
+                'ticket_type': setting.ticket_type,
+                'class_fl': setting.class_fl,
+                'seat_number': setting.seat_number,
+                'from_ap': setting.from_ap,
+                'to_ap': setting.to_ap,
+                'temp_fAp': temp_fAp,
+                'temp_tAp': temp_tAp,
             }
     return render(request,'index.html',context)
+
+
+
