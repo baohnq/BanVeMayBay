@@ -1,0 +1,41 @@
+<a href="{% url 'flight_list'  %}">
+    <img src="https://cdn-icons-png.flaticon.com/512/271/271220.png" width="30px"  alt="" style="border-radius:100%;">
+</a>
+<br><br>
+
+    <h4>Tạo chuyến bay nhaa</h4>
+    <form method="POST" action="">
+      {% csrf_token %} 
+      <label for="flightId">Chọn hãng bay: </label>
+      <input name="brand" required type="text" maxlength="2" list="brand_list">
+      <br><br>
+
+      <label for="fromAirport">Chọn sân bay đi: </label>
+      <input name="fromAp" required type="text" list="airport_list">
+      <br><br>
+
+      <label for="toAirport">Chọn sân bay đến: </label>
+      <input name="toAp" required type="text" list="airport_list">
+      <br><br>
+
+      <label for="flight_time">Thời gian bay (tối thiểu 1): </label>
+      <input type="number" id="flight_time" min="1" required name="flTime">
+      <br><br>
+
+      <a href="{{request.META.HTTP_REFERER}}">Trở về</a>
+    
+      <input onclick="" type="Submit" value="Xác nhận" />
+
+      <datalist id="airport_list">  
+        {% for airport in airports %}
+          <option value="{{airport.apId}}"></option>
+        {% endfor %}
+      </datalist>
+
+      <datalist id="brand_list">  
+        {% for brand in brands %}
+          <option value="{{brand.brId}}"></option>
+        {% endfor %}
+      </datalist>
+    <br><br>
+    </form>
