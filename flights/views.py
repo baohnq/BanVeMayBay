@@ -74,7 +74,6 @@ def createUser(request):
     context = {'user_form': user_form}
     return render(request, 'user_form.html', context)
 
-
 def getCost(fromAP, toAP):
     if fromAP == 'LK':
         return getCost(toAP,fromAP)
@@ -141,6 +140,66 @@ def display(request):
     context = {"info":i}
     return render(request,"display.html",context)
 
+
+def create_schedule(request):
+    page = 'create'
+    flights = Flight.objects.all()
+    
+    if request.method == 'POST':
+        
+        flight_id = request.POST.get('flight_id')
+        flight = Flight.objects.get(flId=flight_id)
+        departure_date = request.POST.get('departure_date')
+        firstClass = int(request.POST.get('firstClass'))
+        secondClass = int(request.POST.get('secondClass'))
+        
+        Schedule.objects.create(
+            flId = flight,
+            date = departure_date,
+            firstClassRest=firstClass,
+            secondClassRest=secondClass,
+            firstClass=firstClass,
+            secondClass=secondClass
+        )
+        return redirect('index')
+            
+    context = {'flights':flights, 'page':page}
+    return render(request,'schedule_form.html',context)
+
+def update_schedule(request,schedule_id):
+    page = 'update'
+    flights = Flight.objects.all()
+    schedule = Schedule.objects.get(id=schedule_id)
+    
+    if request.method == 'POST':
+        flight_id = request.POST.get('flight_id')
+        firstClass = int(request.POST.get('firstClass'))
+        secondClass = int(request.POST.get('secondClass'))
+        
+        schedule.flId = Flight.objects.get(flId=flight_id)
+        schedule.date = request.POST.get('departure_date')
+        schedule.firstClassRest=firstClass
+        schedule.secondClassRest=secondClass
+        schedule.firstClass=firstClass
+        schedule.secondClass=secondClass
+        schedule.save()
+        return redirect('index')
+    
+    context = {'flights':flights, 'page':page, 'schedule':schedule}
+    return render(request,'schedule_form.html',context)
+
+def deleteSchedule(request, schedule_id):
+    schedule = Schedule.objects.get(ticketId=schedule_id)
+
+    # if request.user != message.user:
+    #     return HttpResponse('Your are not allowed here!!')
+
+    if request.method == 'POST':
+        schedule.delete()
+        return redirect('index')
+
+    context = {"obj":schedule}
+    return render(request, "delete.html", context)
 
 def schedule_detail(request,pk):
     schedule = Schedule.objects.get(id=pk)
@@ -209,7 +268,7 @@ def deleteTicket(request, pk):
         return redirect('ticket')
 
     context = {"obj":ticket}
-    return render(request, "delete_ticket.html", context)
+    return render(request, "delete.html", context)
 
 def main(request):
     return render(request,"main.html",)
