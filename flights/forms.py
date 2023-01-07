@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Customer, User, Ticket
+from .models import Customer, User, Ticket, Flight
 
 class CustomerForm(ModelForm):
     class Meta:
@@ -16,4 +16,9 @@ class UserForm(ModelForm):
 class TicketForm(ModelForm):
     class Meta:
         model = Ticket
+        fields = '__all__'
+
+class FlightForm(ModelForm):
+    class Meta:
+        model = Flight
         fields = '__all__'

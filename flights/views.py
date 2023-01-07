@@ -6,18 +6,18 @@ from django.db.models import Q, When, F
 # from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import CustomerForm, UserForm, TicketForm
+from .forms import CustomerForm, UserForm, TicketForm, FlightForm
 from .models import Airport, Flight, Ticket, Brand, Schedule, User, Customer, Transit
 
-from datetime import datetime
+from datetime import datetime,date
 # Create your views here.
 
 
 
 
 def loginPage(request):
-    if request.user.is_authenticated:
-            return redirect('index')
+    # if request.user.is_authenticated:
+    #         return redirect('index')
         
     
     # page = 'login'
@@ -33,12 +33,12 @@ def loginPage(request):
 
         try:
             # database
-            user = User.objects.filter(username=username, password=password)
+            user = User.objects.get(username=username)
             
         except:      
             messages.add_message(request, messages.ERROR, 'No account found')
 
-        user = authenticate(request, username=username, password=password)
+        # user = authenticate(request, username=username, password=password)
         
 
         context['username'] = username
@@ -47,7 +47,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('main')
 
         else:
             
@@ -76,7 +76,6 @@ def createUser(request):
 
     context = {'user_form': user_form}
     return render(request, 'user_form.html', context)
-
 
 def getCost(fromAP, toAP):
     if fromAP == 'LK':
@@ -147,6 +146,66 @@ def display(request):
     return render(request,"display.html",context)
 
 
+def create_schedule(request):
+    page = 'create'
+    flights = Flight.objects.all()
+    
+    if request.method == 'POST':
+        
+        flight_id = request.POST.get('flight_id')
+        flight = Flight.objects.get(flId=flight_id)
+        departure_date = request.POST.get('departure_date')
+        firstClass = int(request.POST.get('firstClass'))
+        secondClass = int(request.POST.get('secondClass'))
+        
+        Schedule.objects.create(
+            flId = flight,
+            date = departure_date,
+            firstClassRest=firstClass,
+            secondClassRest=secondClass,
+            firstClass=firstClass,
+            secondClass=secondClass
+        )
+        return redirect('index')
+            
+    context = {'flights':flights, 'page':page}
+    return render(request,'schedule_form.html',context)
+
+def update_schedule(request,schedule_id):
+    page = 'update'
+    flights = Flight.objects.all()
+    schedule = Schedule.objects.get(id=schedule_id)
+    
+    if request.method == 'POST':
+        flight_id = request.POST.get('flight_id')
+        firstClass = int(request.POST.get('firstClass'))
+        secondClass = int(request.POST.get('secondClass'))
+        
+        schedule.flId = Flight.objects.get(flId=flight_id)
+        schedule.date = request.POST.get('departure_date')
+        schedule.firstClassRest=firstClass
+        schedule.secondClassRest=secondClass
+        schedule.firstClass=firstClass
+        schedule.secondClass=secondClass
+        schedule.save()
+        return redirect('index')
+    
+    context = {'flights':flights, 'page':page, 'schedule':schedule}
+    return render(request,'schedule_form.html',context)
+
+def deleteSchedule(request, schedule_id):
+    schedule = Schedule.objects.get(ticketId=schedule_id)
+
+    # if request.user != message.user:
+    #     return HttpResponse('Your are not allowed here!!')
+
+    if request.method == 'POST':
+        schedule.delete()
+        return redirect('index')
+
+    context = {"obj":schedule}
+    return render(request, "delete.html", context)
+
 def schedule_detail(request,pk):
     schedule = Schedule.objects.get(id=pk)
     
@@ -214,7 +273,7 @@ def deleteTicket(request, pk):
         return redirect('ticket')
 
     context = {"obj":ticket}
-    return render(request, "delete_ticket.html", context)
+    return render(request, "delete.html", context)
 
 def main(request):
     return render(request,"main.html",)
@@ -287,5 +346,73 @@ def index(request):
             }
     return render(request,'index.html',context)
 
+def flights_list(request):
+    flights = Flight.objects.all()
+    context = {"flights":flights}
+    return render(request, "flight_list.html", context)
 
+def addFlight(request):
+    flight_form = FlightForm
+    airports = Airport.objects.all()
+    brands = Brand.objects.all()
+    
+    if request.method == "POST":
+        brand = Brand.objects.get(brId=request.POST.get('brand'))
+        fromAp = Airport.objects.get(apId=request.POST.get('fromAp'))
+        toAp = Airport.objects.get(apId=request.POST.get('toAp'))
+        flTime = request.POST.get('flTime')
 
+        flight_in_dtb = Flight.objects.filter(brand=brand)
+        flight_count = flight_in_dtb.count() + 1
+        today = date.today()
+        year = str(today.year)[2:4]
+
+        autoId = str(brand.brId)
+        autoId += year
+        autoId += '-'
+        num = '000'+str(flight_count) if flight_count < 10 else '00'+str(flight_count)
+        autoId += num
+
+        Flight.objects.create(
+            fromAp = fromAp,
+            toAp = toAp,
+            flTime = flTime,
+            brand = brand, 
+            flId = str(autoId)
+        )
+        print(autoId)
+        flights = Flight.objects.all()
+        context = {'flights':flights}
+        return render(request, "flight_list.html", context)  
+
+    context = {'airports':airports, 'brands':brands  }
+    return render(request, 'add_flight.html', context)
+
+def updateFlight(request, pk):
+    flight = Flight.objects.get(flId=pk)
+    form = FlightForm(instance=flight)
+    
+    airports = Airport.objects.all()
+    if request.method == 'POST':
+        fromAp = request.POST.get('fromAp')
+        toAp = request.POST.get('toAp')
+        flTime = request.POST.get('flight_time')
+
+        flight.fromAp = fromAp
+        flight.toAp = toAp
+        flight.flTime = flTime
+        flight.save()
+        return render(request, 'update_flight.html')
+    
+    context = {"form":form, 'airports':airports, 'flight':flight}
+    return render(request, 'update_flight.html', context)
+
+def deleteFlight(request, pk):
+    flight = Flight.objects.get(flId=pk)
+
+    if request.method == 'POST':
+        flight.delete()
+        return redirect('flight_list')
+
+    context = {"obj":flight}
+    return render(request, "delete.html", context)

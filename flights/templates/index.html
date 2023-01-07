@@ -25,11 +25,11 @@
         
         <main>
             <div class="contaner">
-                <div class="banner">
+                <div class="bannerbook">
                     <div class="navbar">
                         <a class="nav-item active" href={% url "index" %}>Đặt vé</a>
                         <a class="nav-item" href="">Báo cáo</a>
-                        <a class="nav-item" href="">Cập nhật chuyến bay</a>
+                        <a class="nav-item" href="{% url 'flight_list' %}">Danh sách chuyến bay</a>
                         <a class="nav-item" href="{% url 'create_user' %}">Tạo tài khoản</a>
                     </div>
                     <form action="" id="form-search" class="shadow">
