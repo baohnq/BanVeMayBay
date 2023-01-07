@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+      {% csrf_token %} 
+      {{user_form.as_p}}
+      <input onclick="notify()" type="Submit" value="Submit" />
+    </form>
+</div>
+<script>
+  function notify() {
+    alert("User created!");
+  }
+  </script>
+
+{% endblock content %}
