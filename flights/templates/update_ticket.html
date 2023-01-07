@@ -1,0 +1,60 @@
+<form class="form" action="" method="POST">
+  {% csrf_token %}
+
+
+  <div class="form__group">
+    <label for="ticket_id">Ticket ID</label>
+    : {{ticket.ticketId}}
+  </div>
+
+  <div class="form__group">
+    <label for="ticket_schedule">Enter a Schedule</label>
+    <input
+      required
+      type="text"
+      value="{{ticket.flId.flId.fromAp.apName}}-{{ticket.flId.flId.toAp.apName}}-{{ticket.date.date}}"
+      name="schedule"
+      list="schedule-list"
+    />
+    <datalist id="schedule-list">
+      <select id="ticket_schedule">
+        {% for schedule in schedules %}
+        <option value="{{schedule.id}}">{{schedule.flId.fromAp.apName}}-{{schedule.flId.toAp.apName}}-{{schedule.date}}</option>
+        {% endfor %}
+      </select>
+    </datalist>
+  </div>
+
+  <div class="form__group">
+    <label for="ticket_customer">Customer</label>
+    : {{ticket.customID.name}}
+  </div>
+
+  <div class="form__group">
+    <label for="ticket_cost">Cost</label>
+    : {{ticket.cost}}
+  </div>
+ 
+
+  <!-- <div class="form__group">
+    <label for="room_description">Room Description</label>
+    {{form.description}}
+  </div> --> 
+
+  <!-- <div class="form__group">
+      <label for="room_topic">Topic</label>
+      <input required type="text" name="topic" id="room_topic" list="topic-list" />
+      <datalist id="topic-list">
+        <select id="room_topic">
+          <option value="">Select your topic</option>
+          <option value="Python">Python</option>
+          <option value="Django">Django</option>
+        </select>
+      </datalist>
+    </div> --> 
+
+  <div class="form__action">
+    <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
+    <button class="btn btn--main" type="submit">Submit</button>
+  </div>
+</form>

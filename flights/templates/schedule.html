@@ -1,8 +1,19 @@
 <tr>
-    {{schedule.flId.flId}}|
-    {{schedule.flId.brand.brName}}|
-    {{schedule.flId.fromAp.apName}} to {{schedule.flId.toAp.apName}}
-    |{{schedule.date|date:'Y-m-d'}}   
+    {{flightID}}|
+    {{brName}}|
+    {{fromAp}}({{fromPos}}) to {{toAp}}({{toPos}})|
+    {{time}}|
+    {{firstClassRest}}|
+    {{secondClassRest}}|
+    {{cost}}
+
+    {% for transitAp in transitAps %}
+
+        {{transitAp.apId.apName}}|
+    
+    {% endfor %}
+
+
  </tr>
 
  

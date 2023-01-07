@@ -7,8 +7,8 @@ from django.db.models import Q, When, F
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Customer, Schedule
-from .forms import CustomerForm 
-from .models import Airport, Flight, Ticket, Brand, Schedule, User
+from .forms import CustomerForm, TicketForm
+from .models import Airport, Flight, Ticket, Brand, Schedule, User, Transit
 
 from datetime import datetime
 # Create your views here.
@@ -63,7 +63,7 @@ def createCustomer(request,scheduleID):
         )
         
         Ticket.objects.create(
-            ticketId= schedule.flId.flId + '-0007',
+            ticketId= schedule.flId.flId + '-0008',
             flId= schedule,
             date= schedule,
             customID = Customer.objects.get(customerID=request.POST.get('customerID')),
@@ -71,7 +71,7 @@ def createCustomer(request,scheduleID):
             cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId),
             staff= user
         )
-        return redirect('display')
+        return redirect('ticket')
 
     context = {'form': form}
     return render(request, 'customer_form.html', context)
@@ -82,12 +82,77 @@ def display(request):
     context = {"info":i}
     return render(request,"display.html",context)
 
+
 def schedule(request,pk):
     schedule = Schedule.objects.get(id=pk)
-    context = {"schedule":schedule,"pk":pk}
+    
+    flightID = schedule.flId.flId
+
+    fromPos = schedule.flId.fromAp.place
+    fromAp = schedule.flId.fromAp.apName
+
+    toPos = schedule.flId.toAp.place
+    toAp = schedule.flId.toAp.apName
+
+    time = schedule.date
+    brName = schedule.flId.brand.brName
+
+    cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId)
+
+    transitAps =  []#Transit.objects.get(flId=flightID)
+
+    firstClassRest = schedule.firstClassRest
+    secondClassRest = schedule.secondClassRest
+
+
+    context = {"schedule":schedule,"pk":pk, "flightID":flightID, "fromPos":fromPos, "fromAp":fromAp, "toPos":toPos, "toAp":toAp,
+                 "time":time, "brName":brName, "cost":cost, "transitAps": transitAps, "firstClassRest":firstClassRest, "secondClassRest":secondClassRest}
     return render(request,"schedule.html",context)
 
 
+def ticket(request):
+    tickets = Ticket.objects.all()
+    context = {"tickets":tickets}
+    return render(request, "ticket.html", context)
+
+def updateTicket(request, pk):
+
+    ticket = Ticket.objects.get(ticketId=pk)
+    form = TicketForm(instance=ticket)
+    schedules = Schedule.objects.all()
+    customers = Customer.objects.all()
+
+    # if request.user != room.host:
+    #     return HttpResponse('Your are not allowed here!!')
+
+    if request.method == 'POST':
+        schedule_id = request.POST.get("schedule")
+        schedule = Schedule.objects.get(pk=schedule_id)
+        ticket.flId = schedule
+        ticket.date = schedule
+        ticket.cost =  getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId)
+        ticket.booked = datetime.now()
+        ticket.save()
+        return redirect('ticket')
+
+    # context = {'form': form, 'topics': topics, 'ticket': ticket}
+
+
+    context = {"form":form, "schedules":schedules, "customers":customers, "ticket":ticket}
+    return render(request, "update_ticket.html", context)
+
+def deleteTicket(request, pk):
+    ticket = Ticket.objects.get(ticketId=pk)
+
+    # if request.user != message.user:
+    #     return HttpResponse('Your are not allowed here!!')
+
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('ticket')
+
+    context = {"obj":ticket}
+    return render(request, "delete_ticket.html", context)
 
     
 #irports = ["HaNoi","HCM","DaNang","DaLat" ]
