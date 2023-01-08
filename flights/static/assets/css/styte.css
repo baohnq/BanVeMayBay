@@ -85,6 +85,11 @@ main {
     border-radius: 20px;
 }
 
+.form__action{
+    display: flex;
+    justify-content: center;
+}
+
 #form-detail {
     position: absolute;
     width: 60%;
@@ -145,6 +150,3 @@ tr {
   .headsearch{
     background-color: pink;
   }
-
-
-

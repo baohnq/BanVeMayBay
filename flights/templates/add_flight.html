@@ -1,31 +1,56 @@
-<a href="{% url 'flight_list'  %}">
-    <img src="https://cdn-icons-png.flaticon.com/512/271/271220.png" width="30px"  alt="" style="border-radius:100%;">
-</a>
-<br><br>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 
-    <h4>Tạo chuyến bay nhaa</h4>
-    <form method="POST" action="">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static '/assets/css/styte.css' %}">
+  <title>add flight</title>
+</head>
+
+
+<header>
+</header>
+
+<body>
+  <div class="banner banner2">
+    <div class="navbar">
+      <a class="nav-item" href={% url "index" %}>Đặt vé</a>
+      <a class="nav-item" href="">Báo cáo</a>
+      <a class="nav-item active" href="{% url 'flight_list' %}">Chuyến bay</a>
+      <a class="nav-item" href="{% url 'flight_list' %}">Lịch bay</a>
+      <a class="nav-item" href="{% url 'create_user' %}">Tạo tài khoản</a>
+    </div>
+   
+    <form method="POST" action="" id="form-update-fl">
+      
       {% csrf_token %} 
-      <label for="flightId">Chọn hãng bay: </label>
-      <input name="brand" required type="text" maxlength="2" list="brand_list">
-      <br><br>
+      <label for="flightId" class="form-label">Chọn hãng bay: </label>
+      <input name="brand" class="form-control" required type="text" maxlength="2" list="brand_list">
 
-      <label for="fromAirport">Chọn sân bay đi: </label>
-      <input name="fromAp" required type="text" list="airport_list">
-      <br><br>
 
-      <label for="toAirport">Chọn sân bay đến: </label>
-      <input name="toAp" required type="text" list="airport_list">
-      <br><br>
+      <label for="fromAirport" class="form-label">Chọn sân bay đi: </label>
+      <input name="fromAp" class="form-control" required type="text" list="airport_list">
+      
 
-      <label for="flight_time">Thời gian bay (tối thiểu 1): </label>
-      <input type="number" id="flight_time" min="1" required name="flTime">
-      <br><br>
+      <label for="toAirport" class="form-label">Chọn sân bay đến: </label>
+      <input name="toAp" class="form-control" required type="text" list="airport_list">
+      
 
-      <a href="{{request.META.HTTP_REFERER}}">Trở về</a>
-    
-      <input onclick="" type="Submit" value="Xác nhận" />
+      <label for="flight_time" class="form-label">Thời gian bay (tối thiểu 1): </label>
+      <input type="number" class="form-control" id="flight_time" min="1" required name="flTime">
+      
 
+      
+    <div class="form__action">
+      <a class="btn btn--dark" href={% url 'flight_list' %}>Hủy</a>
+      <button class="btn btn--main" type="submit" >Tạo</button>
+    </div>
+   
       <datalist id="airport_list">  
         {% for airport in airports %}
           <option value="{{airport.apId}}"></option>
@@ -39,3 +64,13 @@
       </datalist>
     <br><br>
     </form>
+
+    <script>
+      function notify() {
+        alert("Đã cập nhật thông tin chuyến bay");
+      }
+    </script>
+
+</body>
+
+</html>

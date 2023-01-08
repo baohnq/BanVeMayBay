@@ -29,10 +29,11 @@
         <form id="form-update-fl" action="" method="POST">
             {% csrf_token %}
             <p>Xác nhận xóa "{{obj}}"?</p>
-            <div class="row">
-                <button href="{{request.META.HTTP_REFERER}}">Trở về </button>
-                <button type="submit" value="Confirm">Xóa</button>
-            </div>
+         
+            <div class="form__action">
+                <a class="btn btn--dark" href={% url 'flight_list' %}>Hủy</a>
+                <button class="btn btn--main" type="submit" >Xóa</button>
+              </div>
         </form>
 
         <script>
