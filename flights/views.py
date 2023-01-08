@@ -109,6 +109,7 @@ def createCustomer(request,scheduleID):
     form = CustomerForm()
     schedule = Schedule.objects.get(id=scheduleID)
     user = request.user
+    stt = int(setting.number) - int(setting.seat_number) + 1
     if request.method == 'POST':
         
         Customer.objects.create(
@@ -116,9 +117,8 @@ def createCustomer(request,scheduleID):
             name = request.POST.get('name'),
             sdt = request.POST.get('sdt'),
         )
-        
-        while setting.seat_number > 0:
-            Ticket.objects.create(
+
+        Ticket.objects.create(
                 ticketId= schedule.flId.flId + '-' + str(Ticket.objects.count()),
                 schedule = schedule,
                 customID = Customer.objects.get(customerID=request.POST.get('customerID')),
@@ -126,18 +126,33 @@ def createCustomer(request,scheduleID):
                 cost = getCost(schedule.flId.fromAp.apId, schedule.flId.toAp.apId),
                 staff= user
             )
+        
+        # while setting.seat_number > 0:
             
-            setting.seat_number -=1
+            
+        #     setting.seat_number -=1
+        #     if str(setting.class_fl) == 'economy':
+        #         schedule.firstClassRest -=  1
+        #     else:
+        #         t = schedule.secondClassRest
+        #         schedule.secondClassRest -= 1
+        #     schedule.save()
+
+        setting.seat_number -=1
+        
+        if setting.seat_number > 0:
             if str(setting.class_fl) == 'economy':
                 schedule.firstClassRest -=  1
             else:
                 t = schedule.secondClassRest
                 schedule.secondClassRest -= 1
             schedule.save()
+            return redirect('create_customer', scheduleID)
 
         return redirect('ticket')
 
-    context = {'form': form}
+
+    context = {'form': form, 'stt':stt}
     return render(request, 'customer_form.html', context)
 
 def schedules(request):
@@ -286,6 +301,7 @@ class setting:
     ticket_type = 'one way'
     class_fl = 'economy'
     seat_number = ''
+    number = ''
     from_ap = ''
     to_ap = ''
     departure_date = datetime.now().date()
@@ -303,6 +319,7 @@ def index(request):
         setting.class_fl = request.GET.get('class')
         if request.GET.get('seat_number') != None:
             setting.seat_number = int(request.GET.get('seat_number'))
+            setting.number = setting.seat_number
 
         setting.from_ap = request.GET.get('from')
         
