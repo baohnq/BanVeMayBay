@@ -8,11 +8,6 @@ https://www.youtube.com/watch?v=PtQiiknWUcI
 
 https://github.com/divanov11/StudyBud/
 
-# Môi trường thực thi
-
-
-# Link Demo
-
 # Những mục đã hoàn thành
 - Cài đặt database
 - Màn hình login và chức năng đăng nhập
